@@ -23,12 +23,21 @@ app.add_middleware(
 #     secure=True
 # )
 
+
 minio_client = Minio(
     endpoint=os.getenv("ENDPOINT"),
     access_key=os.getenv("ACCESS_KEY"),
     secret_key=os.getenv("SECRET_KEY"),
     secure=True
 )
+ 
+
+# minio_client = Minio(
+#     endpoint="98271g.stackhero-network.com",
+#     access_key="8cIe5DkrGZYAC6DpcLUz",
+#     secret_key="7BTcdqGkaIIA7LJT5rYwKWCk6yFWQCBzDPc3ns1p",
+#     secure=True
+# )
  
  
 @app.post("/create-bucket/{bucket_name}")

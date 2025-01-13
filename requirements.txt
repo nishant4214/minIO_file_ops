@@ -3,3 +3,4 @@ uvicorn
 minio
 starlette
 python-multipart
+os
