@@ -3,6 +3,7 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload,MediaIoBaseUpload, MediaDownloadProgress
 from google.oauth2.service_account import Credentials
 from fastapi.responses import StreamingResponse
+import json
 
 import os
 import io
@@ -11,7 +12,7 @@ SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
 # Authenticate with Google Drive
-credentials = Credentials.from_service_account_info(SERVICE_ACCOUNT_FILE, scopes=SCOPES)
+credentials = Credentials.from_service_account_info(json.loads(SERVICE_ACCOUNT_FILE))
 drive_service = build("drive", "v3", credentials=credentials)
 
 app = FastAPI()
