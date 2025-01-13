@@ -6,8 +6,7 @@ from fastapi.responses import StreamingResponse
 
 import os
 import io
-SERVICE_ACCOUNT_FILE = os.path.join(os.getcwd(), "credentials", "e-sunlight-447709-d9-f872998d3cc5.json")
-
+SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
 # Load Google Drive credentials
 SCOPES = ["https://www.googleapis.com/auth/drive"]
 
