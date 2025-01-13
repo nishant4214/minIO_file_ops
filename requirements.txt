@@ -2,4 +2,4 @@ fastapi
 uvicorn
 minio
 starlette
-os
+python-multipart
