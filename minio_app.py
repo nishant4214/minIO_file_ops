@@ -8,16 +8,21 @@ import json
 import os
 import io
 # SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
+import time
+
+# Use explicit UNIX timestamp for token generation
+current_time = int(time.time())
 
 service_account_json = os.getenv("SERVICE_ACCOUNT_FILE")
 if not service_account_json:
     raise RuntimeError("SERVICE_ACCOUNT_JSON is not set.")
-print(service_account_json[:100])  # Print the start of the JSON for validation
-# Load credentials from the service account JSON file
+print(service_account_json[:100]) 
 
 credentials = Credentials.from_service_account_info(
     json.loads(service_account_json), scopes=["https://www.googleapis.com/auth/drive"]
 )
+credentials._token_expiry = current_time + 3600  # Token valid for 1 hour
+
 
 # Build the Google Drive service
 drive_service = build("drive", "v3", credentials=credentials)
