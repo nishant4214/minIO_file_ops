@@ -7,12 +7,19 @@ import json
 
 import os
 import io
-SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
-# Load Google Drive credentials
-SCOPES = ["https://www.googleapis.com/auth/drive"]
+# SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
 
-# Authenticate with Google Drive
-credentials = Credentials.from_service_account_info(json.loads(SERVICE_ACCOUNT_FILE))
+service_account_json = os.getenv("SERVICE_ACCOUNT_FILE")
+if not service_account_json:
+    raise RuntimeError("SERVICE_ACCOUNT_JSON is not set.")
+print(service_account_json[:100])  # Print the start of the JSON for validation
+# Load credentials from the service account JSON file
+
+credentials = Credentials.from_service_account_info(
+    json.loads(service_account_json), scopes=["https://www.googleapis.com/auth/drive"]
+)
+
+# Build the Google Drive service
 drive_service = build("drive", "v3", credentials=credentials)
 
 app = FastAPI()
