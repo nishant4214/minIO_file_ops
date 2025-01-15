@@ -3,14 +3,13 @@ from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload, MediaFileUpload,MediaIoBaseUpload, MediaDownloadProgress
 from google.oauth2.service_account import Credentials
 from fastapi.responses import StreamingResponse
-import json
+from fastapi.middleware.cors import CORSMiddleware
 
+import json
 import os
 import io
-# SERVICE_ACCOUNT_FILE = os.getenv("SERVICE_ACCOUNT_FILE")
 import time
 
-# Use explicit UNIX timestamp for token generation
 current_time = int(time.time())
 
 service_account_json = os.getenv("SERVICE_ACCOUNT_FILE")
@@ -28,6 +27,14 @@ credentials._token_expiry = current_time + 3600  # Token valid for 1 hour
 drive_service = build("drive", "v3", credentials=credentials)
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"], 
+    allow_credentials=True,
+    allow_methods=["*"], 
+    allow_headers=["*"],
+)
 
 @app.post("/upload")
 async def upload_file(file: UploadFile):
